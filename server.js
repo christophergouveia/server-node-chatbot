@@ -13,9 +13,8 @@ app.use(function (req, res, next) {
   next();
 });
 const { messageSchema } = require("./schemas/messagesSchema.js");
-const { ipSchema } = require("./schemas/ipSchema.js");
-require("dotenv").config();
-const uri = process.env.VITE_MONGODB_SERVER;
+const { ipSchema } = require("./schemas/ipSchema.js")
+const uri = process.env.MONGODB_SERVER;
 mongoose.connect(uri);
 
 const client = new MongoClient(uri, {
@@ -84,13 +83,8 @@ app.post("/api/newAccess", (req, res) => {
     });
 });
 
-
-run();
-verifyDatabases();
-
 app.listen(80, async () => {
   console.log("Servidor iniciado na porta 80");
-  await client.connect();
-  const res = await client.db("test").collection("messages").find().toArray();
-  console.log(res)
+  run();
+  verifyDatabases();
 });
