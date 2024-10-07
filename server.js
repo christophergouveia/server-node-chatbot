@@ -2,6 +2,14 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const cors = require("cors");
+
+app.use(cors({
+  origin: process.env.NODE_ENV === "production" ? "https://chatbot-vagner.vercel.app" : "http://localhost:5173",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+}));
+
 app.use(express.static("public"));
 app.use(express.json());
 app.use(function (req, res, next) {
